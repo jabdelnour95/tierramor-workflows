@@ -65,15 +65,27 @@ Si tu proceso involucra a otra persona y todavía no validaste los detalles con 
 
 ## Publicar tu cambio
 
-Una vez que tu mapa se ve bien:
+Este repositorio no permite subir cambios directamente a la versión publicada — todo cambio tiene que pasar primero por una revisión. Esto evita que alguien rompa el sitio por accidente. El proceso tiene dos conceptos nuevos si nunca usaste GitHub:
 
-```
-git add .
-git commit -m "Agregar mapa de workflow: [tu área]"
-git push
-```
+- **Rama (branch):** una copia de trabajo separada, donde hacés tus cambios sin tocar todavía la versión publicada.
+- **Pull Request (PR):** una solicitud de "revisá esto y sumalo a la versión publicada". La creás vos, alguien la revisa, y si todo está bien, se aprueba.
 
-Si no tenés permiso de escritura directa sobre este repositorio, abrí un Pull Request en su lugar y alguien del equipo lo va a revisar.
+Pasos, una vez que tu mapa se ve bien:
+
+1. Creá tu rama (elegí un nombre corto, sin espacios ni tildes, que describa tu cambio):
+   ```
+   git checkout -b agregar-workflow-cocina
+   ```
+2. Guardá y subí tu cambio a esa rama:
+   ```
+   git add .
+   git commit -m "Agregar mapa de workflow: [tu área]"
+   git push -u origin agregar-workflow-cocina
+   ```
+3. Después del `push`, la terminal te va a mostrar un link parecido a `https://github.com/.../pull/new/agregar-workflow-cocina`. Copialo y abrilo en el navegador.
+   - Si no ves ningún link, entrá directamente a `https://github.com/jabdelnour95/tierramor-workflows` — va a aparecer un botón amarillo que dice **Compare & pull request**. Hacé click ahí.
+4. Click en **Create pull request**. No necesitás cambiar nada más, los valores por defecto están bien.
+5. Avisale a Javier (o a quien esté revisando) que tu Pull Request está lista. Una vez aprobada, tu mapa se va a sumar automáticamente a la galería pública.
 
 ## Dudas
 
