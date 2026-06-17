@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reporte Mensual Financiero — Flujo de Trabajo | TIERRAMOR-OS</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: #f5f2eb;
+            color: #2c2c2c;
+            padding: 32px 24px;
+        }
+
+        .page {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .system-tag {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: #9a8c6e;
+            margin-bottom: 8px;
+        }
+
+        h1 {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .meta {
+            font-size: 13px;
+            color: #9a8c6e;
+            margin-bottom: 28px;
+        }
+
+        .draft-badge {
+            display: inline-block;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            background: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffc107;
+            border-radius: 4px;
+            padding: 2px 8px;
+            margin-left: 10px;
+            vertical-align: middle;
+        }
+
+        .legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px 28px;
+            padding: 16px 20px;
+            background: #fff;
+            border-radius: 8px;
+            border: 1px solid #ddd5be;
+            margin-bottom: 24px;
+        }
+
+        .legend-label {
+            width: 100%;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: #9a8c6e;
+            margin-bottom: 2px;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+        }
+
+        .swatch {
+            width: 14px;
+            height: 14px;
+            border-radius: 3px;
+            flex-shrink: 0;
+        }
+
+        .diagram-wrap {
+            background: #fff;
+            border-radius: 8px;
+            border: 1px solid #ddd5be;
+            padding: 32px 16px;
+            overflow-x: auto;
+        }
+
+        .mermaid {
+            display: flex;
+            justify-content: center;
+        }
+
+        .notes {
+            margin-top: 24px;
+            padding: 16px 20px;
+            background: #fff;
+            border-radius: 8px;
+            border: 1px solid #ddd5be;
+        }
+
+        .notes-title {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: #9a8c6e;
+            margin-bottom: 10px;
+        }
+
+        .notes ul {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .notes li {
+            font-size: 13px;
+            line-height: 1.5;
+            padding-left: 14px;
+            position: relative;
+        }
+
+        .notes li::before {
+            content: "—";
+            position: absolute;
+            left: 0;
+            color: #9a8c6e;
+        }
+
+        .pending {
+            display: inline-block;
+            font-size: 11px;
+            font-weight: 600;
+            background: #fff3cd;
+            color: #856404;
+            border-radius: 3px;
+            padding: 1px 5px;
+            margin-right: 4px;
+        }
+
+        footer {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 11px;
+            color: #bbb;
+        }
+    </style>
+</head>
+<body>
+<div class="page">
+
+    <div class="system-tag">TIERRAMOR-OS · 03_AREAS / reporte_financiero</div>
+    <h1>Reporte Mensual Financiero — Flujo de Trabajo <span class="draft-badge">Vivero: Pendiente de Alineación</span></h1>
+    <p class="meta">Actualizado: 2026-06-17 · Responsable: Javier Abdelnour (Farm Manager) · Subdepartamentos: Producción Agrícola / Producción Animal / Biofábrica — Tomás · Ganadería — Javier · Vivero — Daniel</p>
+
+    <div class="legend">
+        <div class="legend-label">Leyenda</div>
+        <div class="legend-item">
+            <div class="swatch" style="background:#7B9CDA;"></div>
+            IA + Humano — la IA propone o agrega datos; el humano revisa y confirma
+        </div>
+        <div class="legend-item">
+            <div class="swatch" style="background:#F4A261;"></div>
+            Solo Humano — requiere presencia física o criterio humano directo
+        </div>
+        <div class="legend-item">
+            <div class="swatch" style="background:#52B788;"></div>
+            Agente IA — se ejecuta automáticamente sin intervención humana
+        </div>
+        <div class="legend-item">
+            <div class="swatch" style="background:#E9C46A; border:1px solid #c9a84c;"></div>
+            Captura de datos — se debe registrar en este punto
+        </div>
+        <div class="legend-item">
+            <div class="swatch" style="background:#d0cfc8; border:1px solid #aaa;"></div>
+            Entidad externa — otro departamento o persona involucrada
+        </div>
+    </div>
+
+    <div class="diagram-wrap">
+        <div class="mermaid">
+flowchart TD
+    %% ── Entidades externas ─────────────────────────────────────
+    COCINA(["Cocina y otros departamentos fuera de Finca"])
+    CONTROLLER(["Controller · Paula Vanegas"])
+
+    %% ── Produccion Agricola / Produccion Animal / Biofabrica — Tomas ──
+    subgraph TOMAS[" Produccion Agricola · Produccion Animal · Biofabrica — Tomas "]
+        T1["Registro de Egreso\nTomas · Por transaccion\nHoja: Registro de Egresos"]
+        DC_T1[/"Datos: fecha · # factura · proveedor · descripcion · linea presupuestaria · monto USD o CRC"/]
+        T2["Registro de Ingreso\nTomas · Por transaccion\nHoja: Registro de Ingresos"]
+        DC_T2[/"Datos: fecha · # referencia · cliente · descripcion · linea presupuestaria · monto USD o CRC"/]
+        T3["Transaccion Interna\nTomas · Al proveer o recibir entre subdepartamentos\nEmite Comprobante Interno (TI-XXX)"]
+        DC_T3[/"Datos: numero TI-XXX · fecha · descripcion · cantidad · valor unitario · valor total · subdepto que provee · subdepto que recibe"/]
+        T4["Cierre Mensual de Presupuesto\nTomas · Alrededor del dia 10-14\nFiltra por mes y linea, suma, pega en Budget 2026 'Real'"]
+        DC_T4[/"Datos: total real mensual por linea presupuestaria, ingresos y egresos"/]
+        T5["Envio de Reporte Mensual\nTomas · Antes del dia 15, a finca@tierramor.cr"]
+        DC_T5[/"Datos: captura de Budget 2026 · explicacion de desviaciones (>±10%) · resumen de transacciones internas · comentarios opcionales"/]
+    end
+
+    %% ── Ganaderia — Javier ───────────────────────────────────────
+    subgraph JAV[" Ganaderia — Javier "]
+        J1["Registro de Egreso\nJavier · Por transaccion\nHoja: Registro de Egresos"]
+        DC_J1[/"Datos: fecha · # factura · proveedor · descripcion · linea presupuestaria · monto USD o CRC"/]
+        J2["Registro de Ingreso\nJavier · Por transaccion\nHoja: Registro de Ingresos"]
+        DC_J2[/"Datos: fecha · # referencia · cliente · descripcion · linea presupuestaria · monto USD o CRC"/]
+        J3["Transaccion Interna\nJavier · Al proveer o recibir entre subdepartamentos\nEmite Comprobante Interno (TI-XXX)"]
+        DC_J3[/"Datos: numero TI-XXX · fecha · descripcion · cantidad · valor unitario · valor total · subdepto que provee · subdepto que recibe"/]
+        J4["Cierre Mensual de Presupuesto\nJavier · Alrededor del dia 10-14\nFiltra por mes y linea, suma, pega en Budget 2026 'Real'"]
+        DC_J4[/"Datos: total real mensual por linea presupuestaria, ingresos y egresos"/]
+        J5["Envio de Reporte Mensual\nJavier · Antes del dia 15, a finca@tierramor.cr"]
+        DC_J5[/"Datos: captura de Budget 2026 · explicacion de desviaciones (>±10%) · resumen de transacciones internas · comentarios opcionales"/]
+    end
+
+    %% ── Vivero — Daniel · pendiente de alineacion ───────────────────
+    subgraph DAN[" Vivero — Daniel · pendiente de alineacion "]
+        D1["Registro de Egreso\nDaniel · Por transaccion\nHoja: Registro de Egresos"]
+        DC_D1[/"Datos: fecha · # factura · proveedor · descripcion · linea presupuestaria · monto USD o CRC"/]
+        D2["Registro de Ingreso\nDaniel · Por transaccion\nHoja: Registro de Ingresos"]
+        DC_D2[/"Datos: fecha · # referencia · cliente · descripcion · linea presupuestaria · monto USD o CRC"/]
+        D3["Transaccion Interna\nDaniel · Al proveer o recibir entre subdepartamentos\nEmite Comprobante Interno (TI-XXX)"]
+        DC_D3[/"Datos: numero TI-XXX · fecha · descripcion · cantidad · valor unitario · valor total · subdepto que provee · subdepto que recibe"/]
+        D4["Cierre Mensual de Presupuesto\nDaniel · Alrededor del dia 10-14\nFiltra por mes y linea, suma, pega en Budget 2026 'Real'"]
+        DC_D4[/"Datos: total real mensual por linea presupuestaria, ingresos y egresos"/]
+        D5["Envio de Reporte Mensual\nDaniel · Antes del dia 15, a finca@tierramor.cr"]
+        DC_D5[/"Datos: captura de Budget 2026 · explicacion de desviaciones (>±10%) · resumen de transacciones internas · comentarios opcionales"/]
+    end
+
+    %% ── Revision y Consolidacion — Javier, antes del dia 20 ─────────
+    subgraph REVPHASE[" Revision y Consolidacion — Javier, antes del dia 20 "]
+        REVIEW["Revision del Farm Manager\nJavier · Revisa todos los reportes de subdepartamento"]
+        DC_REV[/"Datos: errores u omisiones encontrados · desviaciones marcadas · cumplimiento de plazo por subdepartamento"/]
+        CONSOL["Reporte Consolidado de Finca\nJavier"]
+        FEED["Retroalimentacion al Lider\nJavier · Si se encuentran errores u omisiones"]
+        TRACK["Registro de Incumplimientos Recurrentes\nJavier · Para evaluaciones de desempeno"]
+    end
+
+    %% ── Flujo principal dentro de cada carril ───────────────────────
+    T1 --> DC_T1 --> T4
+    T2 --> DC_T2 --> T4
+    T3 --> DC_T3 --> T4
+    T4 --> DC_T4 --> T5 --> DC_T5
+
+    J1 --> DC_J1 --> J4
+    J2 --> DC_J2 --> J4
+    J3 --> DC_J3 --> J4
+    J4 --> DC_J4 --> J5 --> DC_J5
+
+    D1 --> DC_D1 --> D4
+    D2 --> DC_D2 --> D4
+    D3 --> DC_D3 --> D4
+    D4 --> DC_D4 --> D5 --> DC_D5
+
+    %% ── Convergencia ────────────────────────────────────────────
+    DC_T5 --> REVIEW
+    DC_J5 --> REVIEW
+    DC_D5 --> REVIEW
+    REVIEW --> DC_REV --> CONSOL
+    DC_REV -. "si hay errores u omisiones" .-> FEED
+    FEED -. "si es recurrente" .-> TRACK
+
+    %% ── Transacciones internas entre subdepartamentos ────────────
+    T3 -. "provee o recibe producto/servicio" .-> J3
+    J3 -. "provee o recibe producto/servicio" .-> D3
+    T3 -. "provee a depto fuera de Finca\nel receptor registra su egreso a su manera" .-> COCINA
+    DC_T3 -. "copia del comprobante" .-> CONTROLLER
+    DC_J3 -. "copia del comprobante" .-> CONTROLLER
+    DC_D3 -. "copia del comprobante" .-> CONTROLLER
+
+    %% ── Estilos ────────────────────────────────────────────────
+    classDef aiHuman  fill:#7B9CDA,stroke:#5a7dba,color:#fff
+    classDef human    fill:#F4A261,stroke:#d4844a,color:#fff
+    classDef aiAgent  fill:#52B788,stroke:#3d9a6d,color:#fff
+    classDef data     fill:#E9C46A,stroke:#c9a84c,color:#4a3800
+    classDef external fill:#d0cfc8,stroke:#aaa,color:#444
+
+    class T1,T2,T3,T4,T5,J1,J2,J3,J4,J5,D1,D2,D3,D4,D5,REVIEW,CONSOL,FEED,TRACK human
+    class DC_T1,DC_T2,DC_T3,DC_T4,DC_T5,DC_J1,DC_J2,DC_J3,DC_J4,DC_J5,DC_D1,DC_D2,DC_D3,DC_D4,DC_D5,DC_REV data
+    class COCINA,CONTROLLER external
+        </div>
+    </div>
+
+    <div class="notes">
+        <div class="notes-title">Notas de diseño</div>
+        <ul>
+            <li><span class="pending">PENDIENTE</span><strong>Alineación con Vivero:</strong> El SOP escrito solo menciona a Tomás (Producción Agrícola / Producción Animal / Biofábrica) y a Javier (Ganadería) — Paisajismo era el tercer subdepartamento nombrado en ese momento. Desde entonces, Paisajismo se movió a Experiences y el Vivero se movió de Operaciones a Finca. Este mapa asume que el Vivero sigue el mismo proceso, replicado de los otros carriles, pero esto todavía no se ha confirmado con Daniel. Validar el proceso real con él antes de considerar este carril como definitivo.</li>
+            <li><strong>Paisajismo excluido:</strong> El documento del SOP todavía nombra a Alejandro Alvarado / Paisajismo dentro del alcance, pero Paisajismo se reasignó recientemente de Finca a Experiences. Este mapa refleja la estructura organizacional actual, no el documento tal como está escrito, por lo que Paisajismo queda intencionalmente fuera.</li>
+            <li><strong>Validación de transacciones internas:</strong> Cada Comprobante Interno (TI-XXX) se registra dos veces — como ingreso por el subdepartamento que provee y como egreso por el que recibe — y ambos registros deben coincidir al fin de mes (mismo número TI, mismo monto).</li>
+            <li><strong>Receptor fuera de Finca:</strong> Cuando quien recibe es un departamento fuera de Finca (ej. Cocina), el subdepartamento de Finca igual registra el ingreso y envía el comprobante, pero el departamento receptor registra su propio egreso en su propio sistema — ese lado no está representado en este mapa.</li>
+            <li><strong>Plazos:</strong> Cada líder de subdepartamento debe enviar su reporte mensual a finca@tierramor.cr antes del día 15 del mes siguiente. Javier revisa todos los reportes y consolida el reporte de todo el departamento antes del día 20.</li>
+            <li><strong>CAPEX:</strong> Las compras de capital (equipos, infraestructura, cualquier activo con vida útil mayor a un año) pasan por el mismo Registro de Egresos, pero requieren aprobación previa del Gerente General antes de realizar la compra — no se representa como un camino separado aquí.</li>
+        </ul>
+    </div>
+
+    <footer>TIERRAMOR-OS · Generado con Claude Code · 2026-06-17</footer>
+
+</div>
+
+<script>
+    mermaid.initialize({
+        startOnLoad: true,
+        theme: 'base',
+        themeVariables: {
+            primaryColor: '#7B9CDA',
+            primaryTextColor: '#ffffff',
+            primaryBorderColor: '#5a7dba',
+            lineColor: '#888888',
+            background: '#ffffff',
+            fontFamily: "'Segoe UI', system-ui, sans-serif",
+            fontSize: '13px'
+        },
+        flowchart: {
+            curve: 'basis',
+            padding: 20,
+            nodeSpacing: 50,
+            rankSpacing: 45
+        }
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Biofábrica — Flujo de Trabajo | TIERRAMOR-OS</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: #f5f2eb;
+            color: #2c2c2c;
+            padding: 32px 24px;
+        }
+
+        .page {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .system-tag {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: #9a8c6e;
+            margin-bottom: 8px;
+        }
+
+        h1 {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .meta {
+            font-size: 13px;
+            color: #9a8c6e;
+            margin-bottom: 28px;
+        }
+
+        .legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px 28px;
+            padding: 16px 20px;
+            background: #fff;
+            border-radius: 8px;
+            border: 1px solid #ddd5be;
+            margin-bottom: 24px;
+        }
+
+        .legend-label {
+            width: 100%;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: #9a8c6e;
+            margin-bottom: 2px;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+        }
+
+        .swatch {
+            width: 14px;
+            height: 14px;
+            border-radius: 3px;
+            flex-shrink: 0;
+        }
+
+        .diagram-wrap {
+            background: #fff;
+            border-radius: 8px;
+            border: 1px solid #ddd5be;
+            padding: 32px 16px;
+            overflow-x: auto;
+        }
+
+        .mermaid {
+            display: flex;
+            justify-content: center;
+        }
+
+        .notes {
+            margin-top: 24px;
+            padding: 16px 20px;
+            background: #fff;
+            border-radius: 8px;
+            border: 1px solid #ddd5be;
+        }
+
+        .notes-title {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: #9a8c6e;
+            margin-bottom: 10px;
+        }
+
+        .notes ul {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .notes li {
+            font-size: 13px;
+            line-height: 1.5;
+            padding-left: 14px;
+            position: relative;
+        }
+
+        .notes li::before {
+            content: "—";
+            position: absolute;
+            left: 0;
+            color: #9a8c6e;
+        }
+
+        footer {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 11px;
+            color: #bbb;
+        }
+    </style>
+</head>
+<body>
+<div class="page">
+
+    <div class="system-tag">TIERRAMOR-OS · 03_AREAS / biofabrica</div>
+    <h1>Biofábrica — Flujo de Trabajo</h1>
+    <p class="meta">Actualizado: 2026-05-29 · Responsable de área: Kennedy Corea · Supervisión: Tomás Guzmán</p>
+
+    <div class="legend">
+        <div class="legend-label">Leyenda</div>
+        <div class="legend-item">
+            <div class="swatch" style="background:#7B9CDA;"></div>
+            IA + Humano — la IA propone o agrega datos; el humano revisa y confirma
+        </div>
+        <div class="legend-item">
+            <div class="swatch" style="background:#F4A261;"></div>
+            Solo Humano — requiere presencia física o criterio humano directo
+        </div>
+        <div class="legend-item">
+            <div class="swatch" style="background:#52B788;"></div>
+            Agente IA — se ejecuta automáticamente sin intervención humana
+        </div>
+        <div class="legend-item">
+            <div class="swatch" style="background:#E9C46A; border:1px solid #c9a84c;"></div>
+            Captura de datos — se debe registrar en el portal en este punto
+        </div>
+        <div class="legend-item">
+            <div class="swatch" style="background:#d0cfc8; border:1px solid #aaa;"></div>
+            Entidad externa — otro departamento u organización involucrada
+        </div>
+    </div>
+
+    <div class="diagram-wrap">
+        <div class="mermaid">
+flowchart TD
+    %% ── Entidades externas ─────────────────────────────────────
+    COCINA(["Cocina"])
+    REST(["Restaurantes externos"])
+    PROV(["Proveedores"])
+    PROD_ALI(["Produccion de Alimentos"])
+    VIVERO(["Vivero"])
+    ADMIN(["Administracion"])
+
+    %% ── FASE 1: Entradas ───────────────────────────────────────
+    subgraph ENT[" Fase 1 · Entradas de Materias Primas — por evento "]
+        A["Recepcion de Materia Prima\nKennedy · Por evento"]
+        DC_A[/"Datos: materia prima · cantidad · unidad\ntipo (comprada o insumo finca) · proveedor · costo · foto · colaborador"/]
+        INV_MP["Inventario de Materias Primas\nSistema · Actualizado en tiempo real · Con alertas de stock minimo"]
+    end
+
+    %% ── FASE 2: Produccion ─────────────────────────────────────
+    subgraph PROD[" Fase 2 · Ciclo de Produccion — por lote "]
+        B["Revision de Pedidos y Planificacion\nKennedy · Al recibir pedido semanal o alerta de stock"]
+        DC_B[/"Datos: pedidos pendientes · stock actual · producto a producir · cantidad objetivo"/]
+        C["Apertura de Lote de Produccion\nKennedy · Por lote"]
+        DC_C[/"Datos: Lote ID nuevo · producto a producir · MP consumidas+qty\nfecha inicio · fecha est. fin · colaborador encargado"/]
+        D["Ejecucion del Proceso de Produccion\nKennedy · Duracion variable segun producto"]
+        E["Cierre de Lote\nKennedy · Al completar produccion"]
+        DC_E[/"Datos: Lote ID · fecha fin real · cantidad de PT obtenida · observaciones"/]
+        INV_ACT["Actualizacion Automatica de Inventarios\nSistema · Debita MP consumidas · Acredita PT obtenido"]
+    end
+
+    %% ── FASE 3: Salidas ────────────────────────────────────────
+    subgraph SAL[" Fase 3 · Salidas de Producto Terminado — por evento "]
+        INV_PT["Inventario de Producto Terminado\nSistema · Actualizado en tiempo real"]
+        F["Despacho Manual\nKennedy · Por venta externa o solicitud directa"]
+        DC_F[/"Datos: producto · cantidad · tipo salida\n(uso interno o venta externa) · precio · cliente o area destino · colaborador"/]
+    end
+
+    %% ── Flujo principal ────────────────────────────────────────
+    A --> DC_A
+    DC_A --> INV_MP
+    INV_MP --> B
+    B --> DC_B
+    DC_B --> C
+    C --> DC_C
+    DC_C --> D
+    D --> E
+    E --> DC_E
+    DC_E --> INV_ACT
+    INV_ACT --> INV_PT
+    INV_PT --> F
+    F --> DC_F
+
+    %% ── Conexiones externas ────────────────────────────────────
+    COCINA -. "entrega residuos organicos" .-> A
+    REST -. "entrega residuos organicos\n(en negociacion)" .-> A
+    PROV -. "entrega insumos comprados" .-> A
+    PROD_ALI -. "orden semanal de insumos\nactiva ciclo de produccion" .-> B
+    INV_MP -. "alerta de stock bajo\nactiva planificacion" .-> B
+    DC_F -. "factura venta externa" .-> ADMIN
+    PROD_ALI -. "debito automatico al registrar\nuso de bioinsumos" .-> INV_PT
+    VIVERO -. "debito automatico al registrar\nuso de bioinsumos" .-> INV_PT
+
+    %% ── Estilos ────────────────────────────────────────────────
+    classDef aiHuman  fill:#7B9CDA,stroke:#5a7dba,color:#fff
+    classDef human    fill:#F4A261,stroke:#d4844a,color:#fff
+    classDef aiAgent  fill:#52B788,stroke:#3d9a6d,color:#fff
+    classDef data     fill:#E9C46A,stroke:#c9a84c,color:#4a3800
+    classDef external fill:#d0cfc8,stroke:#aaa,color:#444
+
+    class B aiHuman
+    class A,C,D,E,F human
+    class INV_MP,INV_ACT,INV_PT aiAgent
+    class DC_A,DC_B,DC_C,DC_E,DC_F data
+    class COCINA,REST,PROV,PROD_ALI,VIVERO,ADMIN external
+        </div>
+    </div>
+
+    <div class="notes">
+        <div class="notes-title">Notas de diseño</div>
+        <ul>
+            <li><strong>Dos tipos de despacho:</strong> Los productos terminados salen del inventario de dos formas distintas. (1) Automáticamente: cuando Producción de Alimentos o Vivero registran uso de bioinsumos en el portal, el sistema crea la salida sin acción de Kennedy. (2) Manualmente: Kennedy registra ventas externas o despachos directos que no vienen de esos dos departamentos.</li>
+            <li><strong>Lote ID:</strong> Cada lote de producción genera un identificador único. Permite rastrear qué materias primas se consumieron para producir cada lote, la fecha de inicio y cierre, el rendimiento real vs. estimado, y quién lo ejecutó.</li>
+            <li><strong>Trigger semanal:</strong> El ciclo de producción se activa principalmente por la orden semanal que envía Producción de Alimentos (Tomás) el jueves o viernes de la semana anterior. También puede dispararse por alertas automáticas de stock bajo o por planificación proactiva de Kennedy.</li>
+            <li><strong>Inventario calculado:</strong> Los inventarios de materias primas y productos terminados no se ingresan manualmente — se calculan en tiempo real sumando entradas y restando consumos en lotes cerrados y salidas registradas. El sistema muestra alertas cuando un ítem cae por debajo del mínimo configurado en el catálogo.</li>
+            <li><strong>Ciclo continuo:</strong> El flujo no es lineal de una sola vez — Biofábrica produce continuamente. Después de cerrar un lote, Kennedy revisa el inventario y los pedidos pendientes, y abre nuevos lotes según la demanda. El diagrama representa un ciclo de producción típico.</li>
+        </ul>
+    </div>
+
+    <footer>TIERRAMOR-OS · Generado con Claude Code · 2026-05-29</footer>
+
+</div>
+
+<script>
+    mermaid.initialize({
+        startOnLoad: true,
+        theme: 'base',
+        themeVariables: {
+            primaryColor: '#7B9CDA',
+            primaryTextColor: '#ffffff',
+            primaryBorderColor: '#5a7dba',
+            lineColor: '#888888',
+            background: '#ffffff',
+            fontFamily: "'Segoe UI', system-ui, sans-serif",
+            fontSize: '13px'
+        },
+        flowchart: {
+            curve: 'basis',
+            padding: 20,
+            nodeSpacing: 50,
+            rankSpacing: 45
+        }
+    });
+</script>
+</body>
+</html>

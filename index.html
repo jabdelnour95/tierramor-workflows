@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Workflow Maps · Tierramor</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: #f5f2eb;
+            color: #2c2c2c;
+            min-height: 100vh;
+        }
+
+        /* ── Header ── */
+        .header {
+            background: #2c2c2c;
+            color: #fff;
+            padding: 40px 32px;
+        }
+
+        .header-inner {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.18);
+            color: #d4cfc8;
+            font-size: 12px;
+            letter-spacing: 0.04em;
+            padding: 5px 12px 5px 9px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-bottom: 16px;
+            transition: background 0.15s;
+            font-family: inherit;
+        }
+
+        .back-btn:hover { background: rgba(255,255,255,0.18); }
+
+        .system-tag {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.14em;
+            color: #9a8c6e;
+            margin-bottom: 10px;
+        }
+
+        .header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            letter-spacing: -0.02em;
+        }
+
+        .header-subtitle {
+            font-size: 15px;
+            color: #b0a89a;
+            max-width: 560px;
+            line-height: 1.5;
+        }
+
+        /* ── Legend bar ── */
+        .legend-bar {
+            background: #fff;
+            border-bottom: 1px solid #ddd5be;
+            padding: 14px 32px;
+        }
+
+        .legend-bar-inner {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 6px 24px;
+        }
+
+        .legend-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: #9a8c6e;
+            margin-right: 4px;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 12px;
+            color: #555;
+        }
+
+        .swatch {
+            width: 12px;
+            height: 12px;
+            border-radius: 2px;
+            flex-shrink: 0;
+        }
+
+        /* ── Main content ── */
+        .main {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 40px 32px 60px;
+        }
+
+        .section-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: #9a8c6e;
+            margin-bottom: 20px;
+        }
+
+        /* ── Gallery grid ── */
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        /* ── Card ── */
+        .card {
+            background: #fff;
+            border-radius: 10px;
+            border: 1px solid #ddd5be;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            transition: box-shadow 0.15s, transform 0.15s;
+        }
+
+        .card:hover {
+            box-shadow: 0 6px 24px rgba(0,0,0,0.10);
+            transform: translateY(-2px);
+        }
+
+        .card-accent {
+            height: 5px;
+            flex-shrink: 0;
+        }
+
+        .card-body {
+            padding: 24px 24px 16px;
+            flex: 1;
+        }
+
+        .card-title {
+            font-size: 19px;
+            font-weight: 700;
+            margin-bottom: 2px;
+            letter-spacing: -0.01em;
+        }
+
+        .card-subtitle {
+            font-size: 12px;
+            color: #9a8c6e;
+            margin-bottom: 12px;
+            font-style: italic;
+        }
+
+        .card-desc {
+            font-size: 13px;
+            color: #555;
+            line-height: 1.55;
+            margin-bottom: 16px;
+        }
+
+        .card-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .tag {
+            font-size: 11px;
+            padding: 3px 8px;
+            border-radius: 20px;
+            background: #f0ede5;
+            color: #6b5f4a;
+            border: 1px solid #e0d8c8;
+        }
+
+        .card-footer {
+            padding: 16px 24px 20px;
+        }
+
+        /* Workflow link button */
+        .btn {
+            display: block;
+            text-align: center;
+            padding: 11px 16px;
+            border-radius: 7px;
+            color: #fff;
+            font-size: 13px;
+            font-weight: 600;
+            text-decoration: none;
+            letter-spacing: 0.01em;
+            transition: opacity 0.15s;
+        }
+
+        .btn:hover { opacity: 0.88; }
+
+        /* Department entry button */
+        .btn-dept {
+            display: block;
+            width: 100%;
+            text-align: center;
+            padding: 11px 16px;
+            border-radius: 7px;
+            color: #fff;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 0.01em;
+            border: none;
+            cursor: pointer;
+            transition: opacity 0.15s;
+            font-family: inherit;
+        }
+
+        .btn-dept:hover { opacity: 0.88; }
+
+        /* ── Coming soon card ── */
+        .card.coming-soon {
+            opacity: 0.55;
+            pointer-events: none;
+        }
+
+        .card.coming-soon .card-title::after {
+            content: " · Coming Soon";
+            font-size: 12px;
+            font-weight: 400;
+            color: #9a8c6e;
+        }
+
+        .btn-disabled {
+            display: block;
+            text-align: center;
+            padding: 11px 16px;
+            border-radius: 7px;
+            background: #d0cfc8;
+            color: #888;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: not-allowed;
+        }
+
+        /* ── Footer ── */
+        footer {
+            text-align: center;
+            padding: 24px;
+            font-size: 11px;
+            color: #bbb;
+            border-top: 1px solid #ddd5be;
+        }
+
+        /* ── Responsive ── */
+        @media (max-width: 600px) {
+            .header { padding: 28px 20px; }
+            .main { padding: 28px 20px 48px; }
+            .legend-bar { padding: 12px 20px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <div class="header-inner">
+        <div id="back-area"></div>
+        <div class="system-tag">TIERRAMOR-OS · Business Process Maps</div>
+        <h1 id="page-title">Tierramor · Workflow Maps</h1>
+        <p class="header-subtitle" id="page-subtitle">Step-by-step process documentation for each operational area of Tierramor. Each map shows who does what, where data is captured, and which steps can be automated.</p>
+    </div>
+</div>
+
+<div class="legend-bar">
+    <div class="legend-bar-inner">
+        <span class="legend-label">Color key</span>
+        <span class="legend-item"><span class="swatch" style="background:#7B9CDA"></span>AI + Human</span>
+        <span class="legend-item"><span class="swatch" style="background:#F4A261"></span>Human only</span>
+        <span class="legend-item"><span class="swatch" style="background:#52B788"></span>AI Agent</span>
+        <span class="legend-item"><span class="swatch" style="background:#E9C46A;border:1px solid #c9a84c"></span>Data capture</span>
+        <span class="legend-item"><span class="swatch" style="background:#d0cfc8;border:1px solid #aaa"></span>External entity</span>
+    </div>
+</div>
+
+<div class="main">
+    <div class="section-label" id="section-label">Departments</div>
+    <div class="gallery" id="gallery"></div>
+</div>
+
+<footer>TIERRAMOR-OS · Updated June 2026 · To add a new workflow, edit the <code>DEPTS</code> array in this file.</footer>
+
+<script>
+    /*
+     * Two-level gallery.
+     *
+     * Top level  → departments (status: "dept" = active, "coming-soon" = placeholder)
+     * Second level → workflows inside each department
+     *
+     * Workflow fields:
+     *   title, subtitle, description, tags, href, accent
+     *   status: "complete" | "coming-soon"
+     */
+    const DEPTS = [
+        {
+            id: "farm",
+            title: "Farm",
+            subtitle: "Tierramor Farms",
+            description: "Production, biological inputs, plant propagation, and animal husbandry across the 270-ha property.",
+            tags: ["5 workflows", "Food · Bio · Nursery · Eggs · Finance"],
+            accent: "#4f7942",
+            status: "dept",
+            workflows: [
+                {
+                    title: "Food Production",
+                    subtitle: "Producción Agrícola",
+                    description: "Weekly crop cycle from seasonal planting plan through bed preparation, sowing, and harvest to kitchen delivery and auto-generated internal invoice.",
+                    tags: ["Seasonal + Weekly", "Lot tracking", "Kitchen integration"],
+                    href: "produccion_agricola/workflow_produccion_agricola_en.html",
+                    accent: "#4f7942",
+                    status: "complete"
+                },
+                {
+                    title: "Biofactory",
+                    subtitle: "Biofábrica",
+                    description: "Raw material intake, production batch lifecycle, and finished product dispatch to internal departments and external customers.",
+                    tags: ["3 phases", "Batch tracking", "Auto-dispatch"],
+                    href: "biofabrica/workflow_biofabrica_en.html",
+                    accent: "#7a5c2e",
+                    status: "complete"
+                },
+                {
+                    title: "Nursery",
+                    subtitle: "Vivero",
+                    description: "Lot lifecycle from seeding or wholesale acquisition through maintenance, graduation, and dispatch — with a built-in quotation system for external clients.",
+                    tags: ["3 phases", "Lot tracking", "Quotation system"],
+                    href: "vivero/workflow_vivero_en.html",
+                    accent: "#3a7a59",
+                    status: "complete"
+                },
+                {
+                    title: "Pastured Eggs",
+                    subtitle: "Huevos de Pastoreo",
+                    description: "Daily egg collection, flock health tracking, feed management, and kitchen or external sale dispatch.",
+                    tags: ["Coming soon"],
+                    href: "#",
+                    accent: "#8b7a3a",
+                    status: "coming-soon"
+                },
+                {
+                    title: "Monthly Financial Report",
+                    subtitle: "Reporte Mensual Financiero",
+                    description: "Continuous income/expense logging per subdepartment, internal transaction documentation, month-end budget reconciliation, and the monthly report reviewed and consolidated by the Farm Manager.",
+                    tags: ["Monthly close", "3 subdepartments", "Nursery pending alignment"],
+                    href: "reporte_financiero/workflow_reporte_financiero_en.html",
+                    accent: "#5c6b8a",
+                    status: "complete"
+                }
+            ]
+        },
+        {
+            id: "experiences",
+            title: "Experiences",
+            subtitle: "Tierramor Becoming",
+            description: "Workshops, retreats, farm tours, and residency programs — multi-department events that activate the full Tierramor offering.",
+            tags: ["1 workflow", "Workshops & Events"],
+            accent: "#4a5c7a",
+            status: "dept",
+            workflows: [
+                {
+                    title: "Workshops & Events",
+                    subtitle: "Workshops y Eventos",
+                    description: "From event decision through approval, parallel department preparation (marketing, kitchen, ops, farm, sales), pre-event review, execution, and post-event analysis.",
+                    tags: ["5 departments", "Parallel prep", "Post-event loop"],
+                    href: "workshops_eventos/workflow_workshops_eventos_en.html",
+                    accent: "#4a5c7a",
+                    status: "complete"
+                }
+            ]
+        },
+        {
+            id: "kitchen",
+            title: "Kitchen / Restaurant",
+            subtitle: "Cocina y Restaurante",
+            description: "Weekly menu planning, kitchen orders from the farm, food prep workflows, and service execution for the Friday restaurant.",
+            tags: ["Coming soon"],
+            accent: "#995C44",
+            status: "coming-soon",
+            workflows: []
+        },
+        {
+            id: "marketing",
+            title: "Marketing",
+            subtitle: "Marketing",
+            description: "Content calendar, campaign planning, social media publishing, and lead tracking for residencies and events.",
+            tags: ["Coming soon"],
+            accent: "#735145",
+            status: "coming-soon",
+            workflows: []
+        },
+        {
+            id: "operations",
+            title: "Operations",
+            subtitle: "Operaciones",
+            description: "Cleaning, maintenance, and supply chain workflows across all departments — coordination layer for the ops team.",
+            tags: ["Coming soon"],
+            accent: "#717F7E",
+            status: "coming-soon",
+            workflows: []
+        },
+        {
+            id: "bioconstruction",
+            title: "Bioconstruction",
+            subtitle: "Bioconstrucción",
+            description: "Project intake, material sourcing, construction phase tracking, and site handover for earthen and natural building projects.",
+            tags: ["Coming soon"],
+            accent: "#7a5c3a",
+            status: "coming-soon",
+            workflows: []
+        },
+        {
+            id: "finance",
+            title: "Finance",
+            subtitle: "Finanzas",
+            description: "Budget tracking, invoice management, cost-per-unit reporting, and monthly close process across all business units.",
+            tags: ["Coming soon"],
+            accent: "#4a6b5c",
+            status: "coming-soon",
+            workflows: []
+        }
+    ];
+
+    /* ── Rendering ── */
+
+    function renderDeptCard(d) {
+        return `
+            <div class="card" onclick="showDept('${d.id}')" style="cursor:pointer">
+                <div class="card-accent" style="background:${d.accent}"></div>
+                <div class="card-body">
+                    <div class="card-title">${d.title}</div>
+                    <div class="card-subtitle">${d.subtitle}</div>
+                    <div class="card-desc">${d.description}</div>
+                    <div class="card-tags">
+                        ${d.tags.map(t => `<span class="tag">${t}</span>`).join("")}
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <button class="btn-dept" style="background:${d.accent}">Browse Workflows →</button>
+                </div>
+            </div>
+        `;
+    }
+
+    function renderComingSoonCard(d) {
+        return `
+            <div class="card coming-soon">
+                <div class="card-accent" style="background:${d.accent}"></div>
+                <div class="card-body">
+                    <div class="card-title">${d.title}</div>
+                    <div class="card-subtitle">${d.subtitle}</div>
+                    <div class="card-desc">${d.description}</div>
+                    <div class="card-tags">
+                        ${d.tags.map(t => `<span class="tag">${t}</span>`).join("")}
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <div class="btn-disabled">Not available yet</div>
+                </div>
+            </div>
+        `;
+    }
+
+    function renderWorkflowCard(w) {
+        const isComplete = w.status === "complete";
+        return `
+            <div class="card ${isComplete ? "" : "coming-soon"}">
+                <div class="card-accent" style="background:${w.accent}"></div>
+                <div class="card-body">
+                    <div class="card-title">${w.title}</div>
+                    <div class="card-subtitle">${w.subtitle}</div>
+                    <div class="card-desc">${w.description}</div>
+                    <div class="card-tags">
+                        ${w.tags.map(t => `<span class="tag">${t}</span>`).join("")}
+                    </div>
+                </div>
+                <div class="card-footer">
+                    ${isComplete
+                        ? `<a href="${w.href}" class="btn" style="background:${w.accent}">View Workflow →</a>`
+                        : `<div class="btn-disabled">Not available yet</div>`
+                    }
+                </div>
+            </div>
+        `;
+    }
+
+    /* ── Navigation ── */
+
+    function showMain() {
+        document.getElementById("back-area").innerHTML = "";
+        document.getElementById("page-title").textContent = "Tierramor · Workflow Maps";
+        document.getElementById("page-subtitle").textContent = "Step-by-step process documentation for each operational area of Tierramor Farm. Each map shows who does what, where data is captured, and which steps can be automated.";
+        document.getElementById("section-label").textContent = "Departments";
+        document.getElementById("gallery").innerHTML = DEPTS.map(d =>
+            d.status === "dept" ? renderDeptCard(d) : renderComingSoonCard(d)
+        ).join("");
+        window.scrollTo(0, 0);
+    }
+
+    function showDept(id) {
+        const dept = DEPTS.find(d => d.id === id);
+        if (!dept) return;
+
+        document.getElementById("back-area").innerHTML =
+            `<button class="back-btn" onclick="showMain()">← All Departments</button>`;
+        document.getElementById("page-title").textContent = dept.title;
+        document.getElementById("page-subtitle").textContent = dept.description;
+        document.getElementById("section-label").textContent = "Workflows — " + dept.title;
+        document.getElementById("gallery").innerHTML = dept.workflows.map(renderWorkflowCard).join("");
+        window.scrollTo(0, 0);
+    }
+
+    /* ── Init ── */
+    showMain();
+</script>
+
+</body>
+</html>

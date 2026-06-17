@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Monthly Financial Report — Workflow | TIERRAMOR-OS</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: #f5f2eb;
+            color: #2c2c2c;
+            padding: 32px 24px;
+        }
+
+        .page { max-width: 1200px; margin: 0 auto; }
+
+        .back-link {
+            display: inline-block;
+            font-size: 12px;
+            color: #9a8c6e;
+            text-decoration: none;
+            margin-bottom: 20px;
+            letter-spacing: 0.02em;
+        }
+
+        .back-link:hover { color: #5c6b8a; }
+
+        .system-tag {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: #9a8c6e;
+            margin-bottom: 8px;
+        }
+
+        h1 { font-size: 22px; font-weight: 700; margin-bottom: 4px; }
+
+        .meta { font-size: 13px; color: #9a8c6e; margin-bottom: 28px; }
+
+        .draft-badge {
+            display: inline-block;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            background: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffc107;
+            border-radius: 4px;
+            padding: 2px 8px;
+            margin-left: 10px;
+            vertical-align: middle;
+        }
+
+        .legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px 28px;
+            padding: 16px 20px;
+            background: #fff;
+            border-radius: 8px;
+            border: 1px solid #ddd5be;
+            margin-bottom: 24px;
+        }
+
+        .legend-label {
+            width: 100%;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: #9a8c6e;
+            margin-bottom: 2px;
+        }
+
+        .legend-item { display: flex; align-items: center; gap: 8px; font-size: 13px; }
+
+        .swatch { width: 14px; height: 14px; border-radius: 3px; flex-shrink: 0; }
+
+        .diagram-wrap {
+            background: #fff;
+            border-radius: 8px;
+            border: 1px solid #ddd5be;
+            padding: 32px 16px;
+            overflow-x: auto;
+        }
+
+        .mermaid { display: flex; justify-content: center; }
+
+        .notes {
+            margin-top: 24px;
+            padding: 16px 20px;
+            background: #fff;
+            border-radius: 8px;
+            border: 1px solid #ddd5be;
+        }
+
+        .notes-title {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: #9a8c6e;
+            margin-bottom: 10px;
+        }
+
+        .notes ul { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+
+        .notes li {
+            font-size: 13px;
+            line-height: 1.5;
+            padding-left: 14px;
+            position: relative;
+        }
+
+        .notes li::before { content: "—"; position: absolute; left: 0; color: #9a8c6e; }
+
+        .pending {
+            display: inline-block;
+            font-size: 11px;
+            font-weight: 600;
+            background: #fff3cd;
+            color: #856404;
+            border-radius: 3px;
+            padding: 1px 5px;
+            margin-right: 4px;
+        }
+
+        footer { margin-top: 20px; text-align: center; font-size: 11px; color: #bbb; }
+    </style>
+</head>
+<body>
+<div class="page">
+
+    <a href="../index.html" class="back-link">← All Workflows</a>
+
+    <div class="system-tag">TIERRAMOR-OS · 03_AREAS / financial-report</div>
+    <h1>Monthly Financial Report — Workflow <span class="draft-badge">Nursery: Pending Alignment</span></h1>
+    <p class="meta">Updated: 2026-06-17 · Owner: Javier Abdelnour (Farm Manager) · Subdepartments: Food Production / Animal Production / Biofactory — Tomás · Ganadería — Javier · Nursery — Daniel</p>
+
+    <div class="legend">
+        <div class="legend-label">Legend</div>
+        <div class="legend-item">
+            <div class="swatch" style="background:#7B9CDA;"></div>
+            AI + Human — AI drafts or aggregates data; human reviews and confirms
+        </div>
+        <div class="legend-item">
+            <div class="swatch" style="background:#F4A261;"></div>
+            Human only — requires physical presence or direct human judgment
+        </div>
+        <div class="legend-item">
+            <div class="swatch" style="background:#52B788;"></div>
+            AI Agent — executes automatically without human intervention
+        </div>
+        <div class="legend-item">
+            <div class="swatch" style="background:#E9C46A; border:1px solid #c9a84c;"></div>
+            Data capture — must be logged at this point
+        </div>
+        <div class="legend-item">
+            <div class="swatch" style="background:#d0cfc8; border:1px solid #aaa;"></div>
+            External entity — another department or person involved
+        </div>
+    </div>
+
+    <div class="diagram-wrap">
+        <div class="mermaid">
+flowchart TD
+    %% ── External entities ──────────────────────────────────────
+    COCINA(["Kitchen & Other Non-Farm Depts"])
+    CONTROLLER(["Controller · Paula Vanegas"])
+
+    %% ── Food Production / Animal Production / Biofactory — Tomas ──
+    subgraph TOMAS[" Food Production · Animal Production · Biofactory — Tomas "]
+        T1["Log Expense\nTomas · Per transaction\nSheet: Registro de Egresos"]
+        DC_T1[/"Data: date · invoice # · provider · description · budget line code · amount USD or CRC"/]
+        T2["Log Income\nTomas · Per transaction\nSheet: Registro de Ingresos"]
+        DC_T2[/"Data: date · ref # · client · description · budget line code · amount USD or CRC"/]
+        T3["Internal Transaction\nTomas · When providing or receiving across subdepartments\nIssues Comprobante Interno (TI-XXX)"]
+        DC_T3[/"Data: TI-XXX number · date · description · qty · unit value · total value · providing subdept · receiving subdept"/]
+        T4["Month-End Budget Close\nTomas · Around day 10-14\nFilters by month and line, sums totals, pastes into Budget 2026 'Real'"]
+        DC_T4[/"Data: actual monthly total per budget line, income and expense"/]
+        T5["Monthly Report Email\nTomas · By day 15, sent to finca@tierramor.cr"]
+        DC_T5[/"Data: Budget 2026 screenshot · deviation explanations (>±10%) · internal transactions summary · optional comments"/]
+    end
+
+    %% ── Ganaderia — Javier ───────────────────────────────────────
+    subgraph JAV[" Ganaderia — Javier "]
+        J1["Log Expense\nJavier · Per transaction\nSheet: Registro de Egresos"]
+        DC_J1[/"Data: date · invoice # · provider · description · budget line code · amount USD or CRC"/]
+        J2["Log Income\nJavier · Per transaction\nSheet: Registro de Ingresos"]
+        DC_J2[/"Data: date · ref # · client · description · budget line code · amount USD or CRC"/]
+        J3["Internal Transaction\nJavier · When providing or receiving across subdepartments\nIssues Comprobante Interno (TI-XXX)"]
+        DC_J3[/"Data: TI-XXX number · date · description · qty · unit value · total value · providing subdept · receiving subdept"/]
+        J4["Month-End Budget Close\nJavier · Around day 10-14\nFilters by month and line, sums totals, pastes into Budget 2026 'Real'"]
+        DC_J4[/"Data: actual monthly total per budget line, income and expense"/]
+        J5["Monthly Report Email\nJavier · By day 15, sent to finca@tierramor.cr"]
+        DC_J5[/"Data: Budget 2026 screenshot · deviation explanations (>±10%) · internal transactions summary · optional comments"/]
+    end
+
+    %% ── Nursery — Daniel · pending alignment ───────────────────────
+    subgraph DAN[" Nursery — Daniel · pending alignment "]
+        D1["Log Expense\nDaniel · Per transaction\nSheet: Registro de Egresos"]
+        DC_D1[/"Data: date · invoice # · provider · description · budget line code · amount USD or CRC"/]
+        D2["Log Income\nDaniel · Per transaction\nSheet: Registro de Ingresos"]
+        DC_D2[/"Data: date · ref # · client · description · budget line code · amount USD or CRC"/]
+        D3["Internal Transaction\nDaniel · When providing or receiving across subdepartments\nIssues Comprobante Interno (TI-XXX)"]
+        DC_D3[/"Data: TI-XXX number · date · description · qty · unit value · total value · providing subdept · receiving subdept"/]
+        D4["Month-End Budget Close\nDaniel · Around day 10-14\nFilters by month and line, sums totals, pastes into Budget 2026 'Real'"]
+        DC_D4[/"Data: actual monthly total per budget line, income and expense"/]
+        D5["Monthly Report Email\nDaniel · By day 15, sent to finca@tierramor.cr"]
+        DC_D5[/"Data: Budget 2026 screenshot · deviation explanations (>±10%) · internal transactions summary · optional comments"/]
+    end
+
+    %% ── Review & Consolidation — Javier, by day 20 ─────────────────
+    subgraph REVPHASE[" Review & Consolidation — Javier, by day 20 "]
+        REVIEW["Farm Manager Review\nJavier · Reviews all subdepartment reports"]
+        DC_REV[/"Data: errors or omissions found · deviation flags · on-time compliance per subdepartment"/]
+        CONSOL["Consolidated Farm Department Report\nJavier"]
+        FEED["Feedback to Subdept Lead\nJavier · If errors or omissions found"]
+        TRACK["Recurring Issue Log\nJavier · For performance review"]
+    end
+
+    %% ── Main flow within each lane ───────────────────────────────
+    T1 --> DC_T1 --> T4
+    T2 --> DC_T2 --> T4
+    T3 --> DC_T3 --> T4
+    T4 --> DC_T4 --> T5 --> DC_T5
+
+    J1 --> DC_J1 --> J4
+    J2 --> DC_J2 --> J4
+    J3 --> DC_J3 --> J4
+    J4 --> DC_J4 --> J5 --> DC_J5
+
+    D1 --> DC_D1 --> D4
+    D2 --> DC_D2 --> D4
+    D3 --> DC_D3 --> D4
+    D4 --> DC_D4 --> D5 --> DC_D5
+
+    %% ── Convergence ────────────────────────────────────────────
+    DC_T5 --> REVIEW
+    DC_J5 --> REVIEW
+    DC_D5 --> REVIEW
+    REVIEW --> DC_REV --> CONSOL
+    DC_REV -. "if errors or omissions" .-> FEED
+    FEED -. "if recurring" .-> TRACK
+
+    %% ── Cross-subdepartment internal transactions ────────────────
+    T3 -. "provides or receives product/service" .-> J3
+    J3 -. "provides or receives product/service" .-> D3
+    T3 -. "provides to non-Farm dept\nreceiver logs expense in own format" .-> COCINA
+    DC_T3 -. "copy of comprobante" .-> CONTROLLER
+    DC_J3 -. "copy of comprobante" .-> CONTROLLER
+    DC_D3 -. "copy of comprobante" .-> CONTROLLER
+
+    %% ── Styles ──────────────────────────────────────────────────
+    classDef aiHuman  fill:#7B9CDA,stroke:#5a7dba,color:#fff
+    classDef human    fill:#F4A261,stroke:#d4844a,color:#fff
+    classDef aiAgent  fill:#52B788,stroke:#3d9a6d,color:#fff
+    classDef data     fill:#E9C46A,stroke:#c9a84c,color:#4a3800
+    classDef external fill:#d0cfc8,stroke:#aaa,color:#444
+
+    class T1,T2,T3,T4,T5,J1,J2,J3,J4,J5,D1,D2,D3,D4,D5,REVIEW,CONSOL,FEED,TRACK human
+    class DC_T1,DC_T2,DC_T3,DC_T4,DC_T5,DC_J1,DC_J2,DC_J3,DC_J4,DC_J5,DC_D1,DC_D2,DC_D3,DC_D4,DC_D5,DC_REV data
+    class COCINA,CONTROLLER external
+        </div>
+    </div>
+
+    <div class="notes">
+        <div class="notes-title">Design notes</div>
+        <ul>
+            <li><span class="pending">PENDING</span><strong>Nursery alignment:</strong> The written SOP only lists Tomás (Food Production / Animal Production / Biofactory) and Javier (Ganadería) — Landscaping was the third subdepartment named at the time. Since then, Landscaping moved to Experiences and the Nursery moved from Operations to Farm. This map assumes the Nursery follows the same process, mirrored from the other lanes, but that has not been confirmed with Daniel yet. Validate the actual process with him before treating this lane as final.</li>
+            <li><strong>Landscaping excluded:</strong> The SOP document still names Alejandro Alvarado / Paisajismo as in scope, but Landscaping was recently reassigned from Farm to Experiences. This map reflects the current org structure, not the document as written, so Landscaping is intentionally left out.</li>
+            <li><strong>Internal transaction matching:</strong> Every Comprobante Interno (TI-XXX) is logged twice — as income by the providing subdepartment and as an expense by the receiving one — and the two entries must reconcile at month-end (same TI number, same amount).</li>
+            <li><strong>Receiver outside Farm:</strong> When the receiving party is a non-Farm department (e.g. Kitchen), the Farm subdepartment still logs the income side and sends the comprobante, but the receiving department logs its own expense in its own system — that side isn't represented in this map.</li>
+            <li><strong>Deadlines:</strong> Each subdepartment lead must email their monthly report to finca@tierramor.cr by day 15 of the following month. Javier reviews all reports and consolidates the department-wide report by day 20.</li>
+            <li><strong>CAPEX:</strong> Capital purchases (equipment, infrastructure, anything with a useful life beyond one year) still go through the same Registro de Egresos, but require prior approval from the General Manager before the purchase is made — not shown as a separate path here.</li>
+        </ul>
+    </div>
+
+    <footer>TIERRAMOR-OS · Generated with Claude Code · 2026-06-17</footer>
+
+</div>
+
+<script>
+    mermaid.initialize({
+        startOnLoad: true,
+        theme: 'base',
+        themeVariables: {
+            primaryColor: '#7B9CDA',
+            primaryTextColor: '#ffffff',
+            primaryBorderColor: '#5a7dba',
+            lineColor: '#888888',
+            background: '#ffffff',
+            fontFamily: "'Segoe UI', system-ui, sans-serif",
+            fontSize: '13px'
+        },
+        flowchart: { curve: 'basis', padding: 20, nodeSpacing: 50, rankSpacing: 45 }
+    });
+</script>
+</body>
+</html>
